@@ -20,8 +20,14 @@ namespace Tic_Tac_Toe_Game
 		public Position GetPosition(Board board)
 		{
 			Position desiredCoordinate = null;
-			while (desiredCoordinate is null)
+			int count = 0;
+			while (desiredCoordinate is null && count != 2)
 			{
+                if (count >= 1)
+                {
+					Console.WriteLine("Please enter valid position");
+				}
+				count++;
 				Console.WriteLine("Please select a location");
 				Int32.TryParse(Console.ReadLine(), out int position);
 				desiredCoordinate = PositionForNumber(position);
@@ -57,9 +63,11 @@ namespace Tic_Tac_Toe_Game
 			Console.WriteLine($"{Name} it is your turn");
 
 			Position position = GetPosition(board);
-
-
-			if (Int32.TryParse(board.GameBoard[position.Row, position.Column], out int _))
+            if (position == null)
+            {
+				Console.WriteLine("You lose your turn");
+			}
+			else if (Int32.TryParse(board.GameBoard[position.Row, position.Column], out int _))
 			{
 				board.GameBoard[position.Row, position.Column] = Marker;
 			}
